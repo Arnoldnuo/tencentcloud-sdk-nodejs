@@ -1,4 +1,4 @@
-const request = require('request');
+const axios = require('axios');
 const QueryString = require("querystring");
 
 /**
@@ -13,20 +13,26 @@ class HttpConnection {
         if (method === "GET") {
             req.url += "?" + QueryString.stringify(data);
         } else {
-            req.form = data;
+            req.data = data;
         }
         Object.assign(req, opt);
-        request(req, function (error, response, body) {
-            /**
-            * callback of `.request`
-            * @callback requestCallback
-            * @param {Error} error Error of the request.
-            * @param {Object} response Response of the request.
-            * @param {String} body Result of the API request.
-            */
 
-            callback(error, response, body);
-        })
+        axios(req).then((response)=>{
+            callback(null, response, response.data);
+        }).catch(function(error){
+            callback(error);
+        });
+        // request(req, function (error, response, body) {
+            // /**
+            // * callback of `.request`
+            // * @callback requestCallback
+            // * @param {Error} error Error of the request.
+            // * @param {Object} response Response of the request.
+            // * @param {String} body Result of the API request.
+            // */
+
+            // callback(error, response, body);
+        // })
     }
 }
 module.exports = HttpConnection;
