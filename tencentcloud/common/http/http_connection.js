@@ -13,7 +13,8 @@ class HttpConnection {
         if (method === "GET") {
             req.url += "?" + QueryString.stringify(data);
         } else {
-            req.data = data;
+            req.data = QueryString.stringify(data);
+            req.headers = { 'content-type': 'application/x-www-form-urlencoded' };
         }
         Object.assign(req, opt);
 
