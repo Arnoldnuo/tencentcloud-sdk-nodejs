@@ -18,6 +18,8 @@ class HttpConnection {
         Object.assign(req, opt);
 
         axios(req).then((response)=>{
+            response.statusCode = response.status;
+            response.statusMessage = response.statusText;
             callback(null, response, response.data);
         }).catch(function(error){
             callback(error);

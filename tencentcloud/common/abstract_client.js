@@ -93,7 +93,7 @@ class AbstractClient {
                         tcError.httpCode = response.statusCode
                         reject(tcError);
                     } else {
-                        data = JSON.parse(data);
+                        // data = JSON.parse(data);
                         if (data.Response.Error) {
                             const tcError = new TencentCloudSDKHttpException(data.Response.Error.Message, data.Response.RequestId)
                             tcError.code = data.Response.Error.Code
